@@ -1,142 +1,181 @@
 import 'package:basex/app/styles.dart';
 import 'package:basex/app/widgets/custom_app_bar.dart';
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../controllers/home_controller.dart';
+import 'dart:math' as math;
 
 class HomeView extends GetView<HomeController> {
+  final PageController _controller = PageController(viewportFraction: 0.9);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.grey[200],
         body: Column(
           children: [
-            Container(color: Styles.kPrimaryColor.withAlpha(80), height: 50.0),
-            Container(
-              color: Styles.kPrimaryColor.withAlpha(80),
-              child: CustomAppBar(
-                onTapLeft: () {},
-                onTapRight: () {},
-                title: 'Kodambakkam, Chennai',
-                leftIcon: CupertinoIcons.ellipsis,
-                rightIcon: CupertinoIcons.cart,
-              ),
-            ),
-            Expanded(
-              child: Column(
-                children: [
-                  Container(
-                    color: Styles.kPrimaryColor.withAlpha(80),
-                    padding: EdgeInsets.only(left: 12.0, right: 12.0, top: 8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'instamart',
-                          style: GoogleFonts.spartan(
-                              fontSize: 22.0,
-                              letterSpacing: 1.1,
-                              fontWeight: FontWeight.w600),
-                        ),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 8.0, vertical: 4.0),
-                          decoration: BoxDecoration(
-                              color: Styles.kPrimaryColor,
-                              borderRadius: BorderRadius.circular(12.0)),
-                          child: Row(
+            AppBarwithSearchBar(),
+            SizedBox(
+              height: 190.0,
+              child: PageView.builder(
+                  onPageChanged: (value) {
+                    controller.index.value = value;
+                  },
+                  itemCount: 5,
+                  controller: _controller,
+                  itemBuilder: (context, index) {
+                    return Stack(children: [
+                      Container(
+                        alignment: Alignment.bottomCenter,
+                        margin:
+                            EdgeInsets.only(left: 12.0, right: 10.0, top: 12.0),
+                        decoration: BoxDecoration(
+                            color: Color((math.Random().nextDouble() * 0xFFFFFF)
+                                    .toInt())
+                                .withOpacity(1.0)
+                                .withAlpha(80),
+                            borderRadius: BorderRadius.circular(20.0)),
+                      ),
+                      Positioned(
+                          top: 0,
+                          right: 0,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.only(right: 30.0, top: 25),
+                            child: Icon(FontAwesomeIcons.gift),
+                          )),
+                      Positioned(
+                        left: 0,
+                        bottom: 0,
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.only(left: 30.0, bottom: 25.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Icon(
-                                Icons.flash_on_sharp,
-                                size: 18.0,
+                              Text(
+                                '50 - 80 % off',
+                                style: GoogleFonts.spartan(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 22.0),
+                              ),
+                              SizedBox(
+                                height: 8.0,
                               ),
                               Text(
-                                '10 - 15 mins',
-                                style: GoogleFonts.openSans(
-                                    letterSpacing: -.5,
-                                    fontWeight: FontWeight.w600),
+                                'use code NEWBIE200',
+                                style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.w500),
                               )
                             ],
                           ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    color: Styles.kPrimaryColor.withAlpha(80),
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(
-                              top: 12.0, left: 12.0, right: 12.0),
-                          height: 50.0,
-                          padding: EdgeInsets.symmetric(horizontal: 10.0),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              border:
-                                  Border.all(color: Colors.grey, width: 0.3),
-                              borderRadius: BorderRadius.circular(6.0)),
-                          child: TextField(
-                            decoration: InputDecoration(
-                                hintText:
-                                    'Search for groceries, veggies and more',
-                                border: InputBorder.none),
-                          ),
                         ),
-                        SizedBox(
-                          height: 15.0,
-                        )
-                      ],
-                    ),
+                      ),
+                    ]);
+                  }),
+            ),
+            SizedBox(height: 8.0),
+            Obx(() {
+              return DotsIndicator(
+                dotsCount: 5,
+                decorator: DotsDecorator(
+                  activeColor: Colors.green,
+                ),
+                onTap: (value) {
+                  _controller.animateToPage(value.toInt(),
+                      duration: Duration(milliseconds: 300),
+                      curve: Curves.easeInOut);
+                },
+                position: controller.index.toDouble(),
+              );
+            }),
+            Padding(
+              padding:
+                  const EdgeInsets.only(left: 12.0, right: 12.0, top: 12.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Frequently bought',
+                    style: GoogleFonts.nunito(
+                        fontSize: 18.0, fontWeight: FontWeight.w600),
                   ),
-                  SizedBox(height: 20.0),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Frequently bought',
-                          style: GoogleFonts.lexendDeca(
-                              fontSize: 18.0, fontWeight: FontWeight.w500),
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              'SEE ALL',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(width: 5.0),
-                            Icon(
-                              CupertinoIcons.right_chevron,
-                              color: Colors.black,
-                              size: 14.0,
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 5.0),
-                  Container(
-                    height: 280.0,
-                    padding: EdgeInsets.symmetric(horizontal: 12.0),
-                    child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 10,
-                        itemBuilder: ((context, index) {
-                          return ProductItemWidget();
-                        })),
+                  Row(
+                    children: [
+                      Text(
+                        'SEE ALL',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(width: 5.0),
+                      Icon(
+                        CupertinoIcons.right_chevron,
+                        color: Colors.green,
+                        size: 16.0,
+                      )
+                    ],
                   )
                 ],
               ),
             ),
+            Container(
+                height: 280.0,
+                margin: EdgeInsets.only(top: 8.0),
+                padding: EdgeInsets.symmetric(horizontal: 12.0),
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 10,
+                    itemBuilder: ((context, index) {
+                      return ProductItemWidget();
+                    })))
           ],
         ));
+  }
+}
+
+class AppBarwithSearchBar extends StatelessWidget {
+  const AppBarwithSearchBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Styles().kPrimaryColorLight,
+      child: Column(
+        children: [
+          SizedBox(height: 50),
+          CustomAppBar(
+            onTapLeft: () {},
+            onTapRight: () {},
+            title: 'Kodambakkam, Chennai',
+            leftIcon: CupertinoIcons.ellipsis,
+            rightIcon: CupertinoIcons.cart,
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 12.0, left: 12.0, right: 12.0),
+            height: 50.0,
+            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: Colors.grey, width: 0.3),
+                borderRadius: BorderRadius.circular(6.0)),
+            child: TextField(
+              decoration: InputDecoration(
+                  hintText: 'Search for groceries, veggies and more',
+                  border: InputBorder.none),
+            ),
+          ),
+          SizedBox(
+            height: 15.0,
+          ),
+        ],
+      ),
+    );
   }
 }
 

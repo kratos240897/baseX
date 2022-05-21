@@ -33,7 +33,7 @@ class CustomAppBar extends StatelessWidget {
           Row(
             children: [
               Icon(
-                CupertinoIcons.location_fill,
+                CupertinoIcons.location_solid,
                 color: Styles.kPrimaryColor,
               ),
               SizedBox(width: 5.0),

@@ -1,4 +1,5 @@
 import 'package:basex/app/modules/cart/views/cart_view.dart';
+import 'package:basex/app/modules/home/bindings/home_binding.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../modules/home/views/home_view.dart';
@@ -18,8 +19,11 @@ class AppPages {
   Route? generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.HOME:
-        return GetPageRoute(routeName: Routes.HOME, page: () => HomeView());
-        case Routes.CART:
+        return GetPageRoute(
+            routeName: Routes.HOME,
+            page: () => HomeView(),
+            binding: HomeBinding());
+      case Routes.CART:
         return GetPageRoute(routeName: Routes.CART, page: () => CartView());
     }
     return null;
