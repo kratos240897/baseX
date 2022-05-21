@@ -130,10 +130,33 @@ class HomeView extends GetView<HomeController> {
                 padding: EdgeInsets.symmetric(horizontal: 12.0),
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: 10,
+                    itemCount: controller.productList.length,
                     itemBuilder: ((context, index) {
-                      return ProductItemWidget();
-                    })))
+                      return ProductItemWidget(
+                        index: index,
+                        controller: controller,
+                      );
+                    }))),
+            Padding(
+              padding:
+                  const EdgeInsets.only(left: 12.0, right: 12.0, top: 12.0),
+              child: Text(
+                'Shop by category',
+                style: GoogleFonts.nunito(
+                    fontSize: 18.0, fontWeight: FontWeight.w600),
+              ),
+            ),
+            SizedBox(height: 8.0),
+            GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4, childAspectRatio: 16 / 9),
+                itemBuilder: (context, index) {
+                  return Container(
+                    child: Column(
+                      
+                    ),
+                  )
+                })
           ],
         ));
   }
@@ -180,8 +203,12 @@ class AppBarwithSearchBar extends StatelessWidget {
 }
 
 class ProductItemWidget extends StatelessWidget {
+  final HomeController controller;
+  final int index;
   const ProductItemWidget({
     Key? key,
+    required this.controller,
+    required this.index,
   }) : super(key: key);
 
   @override
@@ -194,6 +221,7 @@ class ProductItemWidget extends StatelessWidget {
         margin: const EdgeInsets.only(right: 12.0, top: 8.0, bottom: 8.0),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
         child: LayoutBuilder(builder: (context, constraints) {
+          final product = controller.productList[index];
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -211,7 +239,7 @@ class ProductItemWidget extends StatelessWidget {
                   padding: EdgeInsets.only(
                       top: constraints.maxHeight * 0.04,
                       bottom: constraints.maxHeight * 0.04),
-                  child: Image.asset('lib/assets/product.png'),
+                  child: Image.asset(product.image),
                 ),
               ),
               Padding(
@@ -220,7 +248,7 @@ class ProductItemWidget extends StatelessWidget {
                     right: constraints.maxWidth * 0.08,
                     top: constraints.maxWidth * 0.05),
                 child: Text(
-                  'Baskin Robbins Honey Tub',
+                  product.title,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontFamily: GoogleFonts.openSans().fontFamily),
@@ -235,7 +263,7 @@ class ProductItemWidget extends StatelessWidget {
                 child: Row(
                   children: [
                     Text(
-                      '750ml',
+                      product.quantity,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.grey[600],
@@ -252,7 +280,7 @@ class ProductItemWidget extends StatelessWidget {
                 child: Row(
                   children: [
                     Text(
-                      '₹240',
+                      '₹' + product.price,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontFamily: GoogleFonts.openSans().fontFamily),
@@ -266,46 +294,68 @@ class ProductItemWidget extends StatelessWidget {
                         elevation: 1.0,
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(8.0),
-                        child: Container(
-                          width: constraints.maxWidth * 0.5,
-                          padding: EdgeInsets.symmetric(vertical: 5.0),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey[300]!),
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              GestureDetector(
-                                onTap: () {},
-                                child: Text(
-                                  '-',
-                                  style: GoogleFonts.lato(
-                                      fontSize: 22.0,
-                                      color: Colors.green,
-                                      fontWeight: FontWeight.bold),
-                                ),
+                        child: Obx(() {
+                          return Container(
+                              alignment: Alignment.center,
+                              width: constraints.maxWidth * 0.5,
+                              padding: EdgeInsets.symmetric(vertical: 5.0),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey[300]!),
+                                borderRadius: BorderRadius.circular(8.0),
                               ),
-                              Text(
-                                '1',
-                                style: GoogleFonts.lato(
-                                    color: Colors.green,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              GestureDetector(
-                                onTap: () {},
-                                child: Text(
-                                  '+',
-                                  style: GoogleFonts.lato(
-                                      fontSize: 20.0,
-                                      color: Colors.green,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
+                              child: product.selectedVolume.value == 0
+                                  ? GestureDetector(
+                                      onTap: () {
+                                        controller.addVolume(product.id);
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 3.0),
+                                        child: Text('ADD',
+                                            style: GoogleFonts.lato(
+                                                color: Colors.green,
+                                                fontWeight: FontWeight.bold)),
+                                      ),
+                                    )
+                                  : Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            controller.reduceVolume(product.id);
+                                          },
+                                          child: Text(
+                                            '-',
+                                            style: GoogleFonts.lato(
+                                                fontSize: 22.0,
+                                                color: Colors.green,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                        Text(
+                                          product.selectedVolume.toString(),
+                                          style: GoogleFonts.lato(
+                                              color: Colors.green,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            controller.addVolume(product.id);
+                                          },
+                                          child: Text(
+                                            '+',
+                                            style: GoogleFonts.lato(
+                                                fontSize: 20.0,
+                                                color: Colors.green,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        )
+                                      ],
+                                    ));
+                        }),
                       ),
                     )
                   ],

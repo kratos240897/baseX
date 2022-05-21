@@ -26,5 +26,12 @@ flutter:
   uses-material-design: true
 
   assets:
-    - lib/assets/product.png
+    - lib/assets/honey_tub.png
+    - lib/assets/butterscotch_tub.png
+    - lib/assets/chocolate_cone.png
+    - lib/assets/japanese_cone.png
+    - lib/assets/japanese_cup.png
+    - lib/assets/mango.png
+    - lib/assets/rainbow_cone.png
+    - lib/assets/rainbow_cup.png
 
