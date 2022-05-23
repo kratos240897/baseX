@@ -55,44 +55,19 @@ class DummyData {
 
   static List<Category> categories = [
     Category(
-        id: '1',
-        name: 'Fruits and Veggies',
-        image:
-            'https://www.freepnglogos.com/uploads/vegetables-png/fruits-and-vegetables-png-transparent-fruits-and-19.png'),
+        id: '1', name: 'Fruits and Veggies', image: 'lib/assets/veggies.png'),
     Category(
-        id: '1',
-        name: 'Dairy, Bread and Eggs',
-        image:
-            'https://www.freepnglogos.com/uploads/vegetables-png/fruits-and-vegetables-png-transparent-fruits-and-19.png'),
+        id: '1', name: 'Dairy, Bread and Eggs', image: 'lib/assets/dairy.png'),
     Category(
-        id: '1',
-        name: 'Rice, Atta and Dals',
-        image:
-            'https://www.freepnglogos.com/uploads/vegetables-png/fruits-and-vegetables-png-transparent-fruits-and-19.png'),
-    Category(
-        id: '1',
-        name: 'Munchies',
-        image:
-            'https://www.freepnglogos.com/uploads/vegetables-png/fruits-and-vegetables-png-transparent-fruits-and-19.png'),
-    Category(
-        id: '1',
-        name: 'Biscuits',
-        image:
-            'https://www.freepnglogos.com/uploads/vegetables-png/fruits-and-vegetables-png-transparent-fruits-and-19.png'),
+        id: '1', name: 'Rice, Atta and Dals', image: 'lib/assets/rice.png'),
+    Category(id: '1', name: 'Munchies', image: 'lib/assets/munchies.png'),
+    Category(id: '1', name: 'Biscuits', image: 'lib/assets/biscuits.png'),
     Category(
         id: '1',
         name: 'Cools Drinks and Juices',
-        image:
-            'https://www.freepnglogos.com/uploads/vegetables-png/fruits-and-vegetables-png-transparent-fruits-and-19.png'),
+        image: 'lib/assets/drinks.png'),
     Category(
-        id: '1',
-        name: 'Tea, Coffee and More',
-        image:
-            'https://www.freepnglogos.com/uploads/vegetables-png/fruits-and-vegetables-png-transparent-fruits-and-19.png'),
-    Category(
-        id: '1',
-        name: 'Ice Creams',
-        image:
-            'https://www.freepnglogos.com/uploads/vegetables-png/fruits-and-vegetables-png-transparent-fruits-and-19.png'),
+        id: '1', name: 'Tea, Coffee and More', image: 'lib/assets/coffee.png'),
+    Category(id: '1', name: 'Ice Creams', image: 'lib/assets/rainbow_cup.png'),
   ];
 }

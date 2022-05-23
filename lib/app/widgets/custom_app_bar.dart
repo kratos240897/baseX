@@ -40,9 +40,10 @@ class CustomAppBar extends StatelessWidget {
               Text(
                 title,
                 style: TextStyle(
-                    fontFamily: GoogleFonts.nunito().fontFamily,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
                     color: Colors.black,
-                    fontSize: 18.0,
+                    fontSize: 16.0,
+                    letterSpacing: 0.5,
                     fontWeight: FontWeight.w500),
               ),
             ],
@@ -54,7 +55,7 @@ class CustomAppBar extends StatelessWidget {
                     padding: const EdgeInsets.all(2.0),
                     child: Text(
                       badgeCount!,
-                      style: GoogleFonts.spartan(
+                      style: GoogleFonts.actor(
                           fontSize: 10.0, color: Colors.black),
                     ),
                   ),

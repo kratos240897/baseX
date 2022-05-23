@@ -13,7 +13,6 @@ dependencies:
   google_fonts: ^2.3.2
   cached_network_image: ^3.2.0
   badges: ^2.0.2
-  flutter_statusbarcolor_ns: ^0.4.0
   dots_indicator: ^2.1.0
   font_awesome_flutter: ^10.1.0
 
@@ -34,4 +33,11 @@ flutter:
     - lib/assets/mango.png
     - lib/assets/rainbow_cone.png
     - lib/assets/rainbow_cup.png
+    - lib/assets/veggies.png
+    - lib/assets/dairy.png
+    - lib/assets/coffee.png
+    - lib/assets/drinks.png
+    - lib/assets/munchies.png
+    - lib/assets/rice.png
+    - lib/assets/biscuits.png
 
